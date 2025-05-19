@@ -22,9 +22,14 @@ export class UploadController {
     // @UploadedFile() file: Express.Multer.File,
     @Body() body: UploadChunkDto,
   ) {
-    const { uploadId, chunkIndex } = body;
+    const { uploadId, chunkIndex, filename } = body;
     await this.uploadService.saveChunk(uploadId, chunkIndex, file.buffer);
-    return { message: 'Chunk uploaded' };
+    return {
+      success: true,
+      uploadId,
+      chunkIndex,
+      filename,
+    };
   }
 
   @Post('merge')
